@@ -1,0 +1,87 @@
+{
+  "experiment_name": "classic-k=2-nomass-fem2-512-lambdy=1e3",
+  "output_dir": "outputs/stokes_lid",
+  "domain": "[-1,1]^2",
+  "nu": 1.0,
+  "boundary_penalty_epsilon": 1000.0,
+  "lid": {
+    "type": "classic",
+    "U": 1.0,
+    "smooth_profile": "cos2"
+  },
+  "reference": {
+    "method": "fem",
+    "checkpoint_path": "",
+    "reuse_if_exists": true,
+    "fem_mesh_N": 512,
+    "fem_order": 2
+  },
+  "fns": {
+    "solver": [
+      "direct_ls"
+    ],
+    "n_list": [
+      64,
+      128,
+      256,
+      512,
+      1024,
+      2048,
+      4096
+    ],
+    "reluk_k": 2,
+    "neuron_sampling": {
+      "param_space": "Sd",
+      "positive_bias": false,
+      "intersection_filter": true,
+      "sample_alg": "energy",
+      "energy_max_iter": 300,
+      "energy_jit": true,
+      "energy_seed": 42,
+      "energy_cache_dir": ".sphere_cache",
+      "energy_force_recompute": false
+    },
+    "quadrature": {
+      "Nx": 200,
+      "order": 5,
+      "chunk_size": 60000
+    },
+    "evaluation": {
+      "Nx": 500,
+      "order": 5,
+      "chunk_size": 60000
+    },
+    "boundary": {
+      "quadrature": {
+        "Nx": 100,
+        "order": 4,
+        "chunk_size": 64000
+      },
+      "evaluation": {
+        "Nx": 200,
+        "order": 4,
+        "chunk_size": 64000
+      }
+    },
+    "float64": true,
+    "linear_solver": {
+      "name": "lstsq",
+      "lstsq": {
+        "rcond": null,
+        "lapack_driver": "gelsd",
+        "save_svd": true
+      }
+    },
+    "inner_evaluate": {
+      "delta": 0.1
+    }
+  },
+  "plotting": {
+    "make_flow_figure": true,
+    "make_convergence_figure": true,
+    "figure_format": "png",
+    "quiver_stride": 16,
+    "grid_N": 256
+  },
+  "overwrite": false
+}

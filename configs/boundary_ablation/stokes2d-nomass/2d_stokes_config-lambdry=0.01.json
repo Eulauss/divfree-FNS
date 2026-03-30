@@ -1,0 +1,89 @@
+{
+  "run": {
+    "out_dir": "outputs/boundary_ablation",
+    "name": "stokes2d-k=4-lambdry=0.01",
+    "seed": 0
+  },
+  "problem": {
+    "type": "stokes2d",
+    "target": {
+      "freq": 3.141592653589793
+    },
+    "nu": 1.0
+  },
+  "basis": {
+    "k": 4
+  },
+  "sampler": {
+    "param_space": "Sd",
+    "positive_bias": false,
+    "intersection_filter": true,
+    "sample_alg": "energy",
+    "energy_max_iter": 300,
+    "energy_jit": true,
+    "energy_seed": 42,
+    "energy_cache_dir": ".sphere_cache",
+    "energy_force_recompute": false
+  },
+  "quadrature": {
+    "Nx": 200,
+    "order": 5,
+    "chunk_size": 60000
+  },
+  "evaluation": {
+    "Nx": 500,
+    "order": 5,
+    "chunk_size": 80000
+  },
+  "boundary": {
+    "lambda_boundary": 0.01,
+    "Nx": 300,
+    "order": 5,
+    "chunk_size": 64000
+  },
+  "experiment": {
+    "M_list": [
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024,
+      2048,
+      4096
+    ],
+    "reg_lambda": 0,
+    "mass_matrix": false,
+    "compute_cond_num":false
+  },
+  "solver": {
+    "name": "lstsq",
+    "cholesky": {
+      "jitter": 0.0
+    },
+    "lstsq": {
+      "rcond": null,
+      "lapack_driver": "gelsd",
+      "save_svd": true
+    },
+    "cg": {
+      "tol": 1e-10,
+      "maxiter": 20000
+    },
+    "lsqr": {
+      "damp": 0.0,
+      "atol": 1e-10,
+      "btol": 1e-10,
+      "iter_lim": 20000,
+      "show": false
+    },
+    "auto": {
+      "max_cholesky_dof": 8000,
+      "max_lstsq_dof": 6000
+    }
+  },
+  "io": {
+    "save_matrices": false,
+    "save_parameters": true
+  }
+}
