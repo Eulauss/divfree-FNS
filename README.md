@@ -1,13 +1,11 @@
 # div-free
 
-This is the official code repository for our paper.
+Official implementation for the paper **Divergence-free Linearized Neural Networks: Integral Representation and Optimal Approximation Rates**, by **Juncai He, Xinliang Liu, and Zitong Tian**.
 
-
-The repository currently contains three main experiment families:
-
-- `L2` approximation of divergence-free vector fields in 2D and 3D
-- homogeneous-boundary Stokes problems in 2D and 3D
-- 2D lid-driven cavity flow, together with FEM reference solutions and FEM-vs-FNS comparison
+At present, the repository includes three main experiment families:
+- **Divergence-free \(L^2\) approximation** of vector fields in 2D and 3D
+- **Homogeneous-boundary Stokes problems** in 2D and 3D
+- **2D lid-driven cavity flow**, including FEM reference solutions and FEM-vs-FNS comparisons
 
 ## Environment Setup
 
@@ -23,10 +21,11 @@ After activation, the commands below can be run directly with `python` or `bash`
 ## Repository Layout
 
 ```text
-src/       main entrypoints and implementation
-configs/   experiment configs
-scripts/   batch runners, drawing scripts, full pipeline
-outputs/   generated results and figures (gitignored)
+.sphere_cache/   cached inner parameters of neurons
+src/             main entrypoints and implementation
+configs/         experiment configs
+scripts/         batch runners, drawing scripts, full pipeline
+outputs/         generated results and figures (gitignored)
 ```
 
 Main entrypoints:
@@ -60,7 +59,7 @@ This command uses the same one-click entrypoint as the full run, but with a redu
 
 It takes around 1h to complete all experiments above on a dual-socket AMD EPYC 9554 server with 128 physical cores.
 
-To run the full-scale pipeline, use:
+To run the full-scale pipeline and get all the results in the paper, use:
 
 ```bash
 EXPERIMENT_SCALE=full bash scripts/run_all_experiments.sh
@@ -96,7 +95,7 @@ LOG_FILE=my_run.log bash scripts/run_all_experiments.sh
 Environment variables:
 
 - `EXPERIMENT_SCALE=small|full`: choose between the reduced pipeline and the original full-scale pipeline
-- `SKIP_ABLATION=1`: skip `scripts/ablation/run_boundary_ablation.sh` and `scripts/ablation/run_mass_ablation.sh`
+- `SKIP_ABLATION=1`: skip `scripts/ablation/run_boundary_ablation.sh` and `scripts/ablation/run_mass_ablation.sh`, which are relatively heavy experiments
 - `DRY_RUN=1`: print the pipeline steps without executing them
 - `LOG_FILE=...`: write logs to a custom file instead of the default timestamped log
 
